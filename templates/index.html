@@ -1,0 +1,86 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoLab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/go/go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/comment/comment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/selection/active-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/keymap/vim.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="/static/css/rosepine.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rosepine': {
+                            base: '#191724',
+                            surface: '#1f1d2e',
+                            overlay: '#26233a',
+                            muted: '#6e6a86',
+                            subtle: '#908caa',
+                            text: '#e0def4',
+                            love: '#eb6f92',
+                            gold: '#f6c177',
+                            rose: '#ebbcba',
+                            pine: '#31748f',
+                            foam: '#9ccfd8',
+                            iris: '#c4a7e7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="static/js/editor.js"></script>
+
+</head>
+<body class="bg-rosepine-base text-rosepine-text h-screen flex flex-col">
+    <header class="bg-rosepine-surface py-2 px-4 flex justify-between items-center border-b border-rosepine-overlay">
+        <div class="flex items-center gap-3">
+            <span class="text-xl font-bold">GoLab</span>
+            <span id="vim-indicator" class="bg-rosepine-pine px-2 py-0.5 text-xs rounded font-mono">VIM</span>
+        </div>
+        <div class="flex gap-2 items-center">
+            <div id="vim-mode-display-container" class="flex items-center mr-2">
+                <span class="mr-1 text-sm">Mode:</span>
+                <span id="vim-mode-display" class="vim-mode-indicator normal-mode">NORMAL</span>
+            </div>
+            <button id="vim-toggle" class="bg-rosepine-overlay text-rosepine-text px-3 py-1 rounded-md hover:bg-rosepine-muted transition text-sm">
+                Disable Vim
+            </button>
+            <button id="run-button" class="bg-rosepine-rose text-rosepine-base px-3 py-1 rounded-md hover:opacity-90 transition">
+                Run (Ctrl+Enter)
+            </button>
+        </div>
+    </header>
+
+    <main class="flex flex-1 overflow-hidden">
+        <div class="w-1/2 h-full border-r border-rosepine-overlay">
+            <textarea id="code" name="code" class="hidden">{{.DefaultCode}}</textarea>
+        </div>
+
+        <div class="w-1/2 h-full flex flex-col bg-rosepine-surface">
+            <div class="p-2 border-b border-rosepine-overlay flex justify-between items-center">
+                <h2 class="font-semibold">Output</h2>
+                <div id="spinner" style="display: none;" class="items-center">
+                    <svg class="animate-spin h-4 w-4 text-rosepine-text mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Running...
+                </div>
+            </div>
+            
+            <div class="flex-1 p-4 overflow-auto bg-rosepine-base">
+                <pre id="output" class="font-mono text-sm whitespace-pre-wrap text-rosepine-text">// Run your code to see output here</pre>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

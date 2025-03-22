@@ -1,0 +1,90 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.cm-s-rosepine.CodeMirror {
+    background-color: #191724;
+    color: #e0def4;
+    height: 100%;
+    font-size: 14px;
+}
+
+.cm-s-rosepine .CodeMirror-gutters {
+    background: #1f1d2e;
+    border-right: 0;
+}
+
+.cm-s-rosepine .CodeMirror-linenumber {
+    color: #6e6a86;
+}
+
+.cm-s-rosepine .CodeMirror-cursor {
+    border-left: 2px solid #e0def4 !important;
+    width: 8px !important;
+    opacity: 0.8;
+}
+
+.cm-s-rosepine .cm-keyword { color: #c4a7e7; }
+.cm-s-rosepine .cm-atom { color: #ebbcba; }
+.cm-s-rosepine .cm-number { color: #f6c177; }
+.cm-s-rosepine .cm-def { color: #9ccfd8; }
+.cm-s-rosepine .cm-variable { color: #e0def4; }
+.cm-s-rosepine .cm-variable-2 { color: #e0def4; }
+.cm-s-rosepine .cm-variable-3 { color: #e0def4; }
+.cm-s-rosepine .cm-property { color: #e0def4; }
+.cm-s-rosepine .cm-operator { color: #908caa; }
+.cm-s-rosepine .cm-comment { color: #6e6a86; font-style: italic; }
+.cm-s-rosepine .cm-string { color: #f6c177; }
+.cm-s-rosepine .cm-string-2 { color: #f6c177; }
+.cm-s-rosepine .cm-meta { color: #908caa; }
+.cm-s-rosepine .cm-qualifier { color: #908caa; }
+.cm-s-rosepine .cm-builtin { color: #31748f; }
+.cm-s-rosepine .cm-bracket { color: #908caa; }
+.cm-s-rosepine .cm-tag { color: #eb6f92; }
+.cm-s-rosepine .cm-attribute { color: #9ccfd8; }
+.cm-s-rosepine .cm-hr { color: #908caa; }
+.cm-s-rosepine .cm-link { color: #c4a7e7; }
+
+.cm-s-rosepine .cm-error { 
+    color: #eb6f92; 
+    text-decoration: underline;
+}
+
+.cm-s-rosepine .cm-fat-cursor .CodeMirror-cursor,
+.cm-s-rosepine .cm-animate-fat-cursor {
+    background-color: rgba(235, 188, 186, 0.6) !important;
+    border: none !important;
+    width: 0.8em !important;
+}
+
+.cm-s-rosepine .CodeMirror-activeline-background {
+    background: rgba(31, 29, 46, 0.7);
+}
+
+.cm-s-rosepine .CodeMirror-selected {
+    background-color: rgba(38, 35, 58, 0.7) !important;
+}
+
+.vim-mode-indicator {
+    font-family: monospace;
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    color: #e0def4;
+    min-width: 5rem;
+    text-align: center;
+}
+
+.normal-mode {
+    background-color: #6e6a86;
+}
+
+.insert-mode {
+    background-color: #31748f;
+}
+
+.visual-mode {
+    background-color: #c4a7e7;
+}

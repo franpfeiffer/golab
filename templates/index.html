@@ -47,7 +47,7 @@
             <span id="vim-indicator" class="bg-rosepine-pine px-2 py-1 text-xs rounded font-mono">VIM</span>
         </div>
         <div class="flex gap-2 items-center">
-            <div id="vim-mode-display-container" class="flex items-center mr-2">
+            <div id="vim-mode-display-container" class="hidden sm:flex items-center mr-2">
                 <span class="mr-1 text-sm">Mode:</span>
                 <span id="vim-mode-display" class="vim-mode-indicator normal-mode">NORMAL</span>
             </div>
@@ -55,17 +55,17 @@
                 Disable Vim
             </button>
             <button id="run-button" class="bg-rosepine-rose text-rosepine-base px-3 py-1 rounded-md hover:opacity-90 transition">
-                Run (Ctrl+Enter)
+                Run
             </button>
         </div>
     </header>
 
-    <main class="flex flex-1 overflow-hidden">
-        <div class="w-1/2 h-full border-r border-rosepine-overlay">
+    <main class="flex flex-col md:flex-row flex-1 overflow-hidden">
+        <div class="w-full md:w-1/2 h-1/2 md:h-full border-b md:border-b-0 md:border-r border-rosepine-overlay">
             <textarea id="code" name="code" class="hidden">{{.DefaultCode}}</textarea>
         </div>
 
-        <div class="w-1/2 h-full flex flex-col bg-rosepine-surface">
+        <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-rosepine-surface">
             <div class="p-2 border-b border-rosepine-overlay flex justify-between items-center">
                 <h2 class="font-semibold">Output</h2>
                 <div id="spinner" style="display: none;" class="items-center">

@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	tempDir := filepath.Join(os.TempDir(), "goplayground")
+	tempDir := filepath.Join(os.TempDir(), "golab")
 	if err := os.MkdirAll(tempDir, 0755); err != nil {
 		log.Fatalf("Failed to create temp directory: %v", err)
 	}
@@ -23,9 +23,9 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "42069"
 	}
-	
+
 	fmt.Printf("Server running at http://localhost:%s\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

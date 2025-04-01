@@ -1,10 +1,10 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoLab</title>
+    <link rel="icon" href="/static/images/gopher-icon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/go/go.min.js"></script>
@@ -44,7 +44,7 @@
     <header class="bg-rosepine-surface py-2 px-4 flex justify-between items-center border-b border-rosepine-overlay">
         <div class="flex items-center gap-3">
             <span class="text-xl font-bold">GoLab</span>
-            <span id="vim-indicator" class="bg-rosepine-pine px-2 py-0.5 text-xs rounded font-mono">VIM</span>
+            <span id="vim-indicator" class="bg-rosepine-pine px-2 py-1 text-xs rounded font-mono">VIM</span>
         </div>
         <div class="flex gap-2 items-center">
             <div id="vim-mode-display-container" class="flex items-center mr-2">
@@ -76,7 +76,7 @@
                     Running...
                 </div>
             </div>
-            
+
             <div class="flex-1 p-4 overflow-auto bg-rosepine-base">
                 <pre id="output" class="font-mono text-sm whitespace-pre-wrap text-rosepine-text">// Run your code to see output here</pre>
             </div>

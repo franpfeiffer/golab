@@ -2,7 +2,6 @@ let editor;
 let vimModeActive = true;
 
 function runCode() {
-    console.log("Running code...");
     const code = editor.getValue();
     const outputElement = document.getElementById("output");
     const spinnerElement = document.getElementById("spinner");
@@ -13,7 +12,7 @@ function runCode() {
         method: "POST",
         body: code
     })
-        .then(response => {
+        .then(async response => {
             if (!response.ok) {
                 return response.text().then(text => {
                     throw new Error(text || `HTTP error! status: ${response.status}`);
@@ -34,10 +33,8 @@ function runCode() {
 }
 
 function initEditor() {
-    console.log("Initializing editor...");
-
     const extraKeys = {
-        "Ctrl-Enter": function(cm) {
+        "Ctrl-Enter": function() {
             console.log("Ctrl+Enter pressed");
             runCode();
         }
@@ -83,20 +80,7 @@ function initEditor() {
         toggleVimMode();
     });
 
-    editor.on('keydown', function(cm, event) {
-        if (event.key === 'Escape' && vimModeActive) {
-            setTimeout(function() {
-                if (CodeMirror.Vim) {
-                    const vimState = CodeMirror.Vim.maybeInitVimState_(editor);
-                    if (vimState && vimState.mode !== 'normal') {
-                        CodeMirror.Vim.handleKey(editor, '<Esc>', 'mapping');
-                    }
-                    updateModeDisplay();
-                }
-                editor.focus();
-            }, 0);
-        }
-    });
+    setupVimModeDetection();
 
     updateVimModeIndicator();
 
@@ -112,29 +96,56 @@ function initEditor() {
         } catch (e) {
             console.error("Error setting up Vim key mappings:", e);
         }
+    }
+
+    updateModeDisplay();
+}
+
+function setupVimModeDetection() {
+    if (!CodeMirror.Vim) return;
+
+    try {
+        const originalHandleKey = CodeMirror.Vim.handleKey;
+        CodeMirror.Vim.handleKey = function(cm, key, origin) {
+            const vimState = CodeMirror.Vim.maybeInitVimState_(cm);
+            const oldMode = vimState ? vimState.mode : 'normal';
+
+            const result = originalHandleKey.call(this, cm, key, origin);
+
+            const newVimState = CodeMirror.Vim.maybeInitVimState_(cm);
+            const newMode = newVimState ? newVimState.mode : 'normal';
+
+            if (oldMode !== newMode) {
+                cm.signal(cm, 'vim-mode-change', newMode);
+                updateModeDisplay(newMode);
+            }
+
+            return result;
+        };
+
+        editor.on('keyHandled', function() {
+            setTimeout(updateModeDisplay, 0);
+        });
 
         editor.on('vim-mode-change', function(mode) {
             updateModeDisplay(mode);
         });
 
-        try {
-            const originalHandleKey = CodeMirror.Vim.handleKey;
-            CodeMirror.Vim.handleKey = function(cm, key, origin) {
-                const oldMode = CodeMirror.Vim.maybeInitVimState_(cm).mode;
-                const result = originalHandleKey.call(this, cm, key, origin);
-                const newMode = CodeMirror.Vim.maybeInitVimState_(cm).mode;
+        editor.on('vim-command-done', function() {
+            updateModeDisplay();
+        });
 
-                if (oldMode !== newMode) {
-                    cm.trigger('vim-mode-change', newMode);
-                }
+        editor.on('focus', function() {
+            updateModeDisplay();
+        });
 
-                return result;
-            };
-        } catch (e) {
-            console.error("Error hijacking Vim state:", e);
-        }
+    } catch (e) {
+        console.error("Error setting up Vim mode detection:", e);
     }
-    updateModeDisplay();
+
+    editor.on('keydown', function() {
+        setTimeout(updateModeDisplay, 0);
+    });
 }
 
 function updateModeDisplay(mode) {
@@ -150,12 +161,25 @@ function updateModeDisplay(mode) {
 
         const modeDisplay = document.getElementById("vim-mode-display");
         if (modeDisplay) {
-            modeDisplay.textContent = mode ? mode.toUpperCase() : "NORMAL";
+            let displayText = "NORMAL";
+            if (mode === "insert") {
+                displayText = "INSERT";
+            } else if (mode === "visual") {
+                displayText = "VISUAL";
+            } else if (mode === "visual-line") {
+                displayText = "VISUAL LINE";
+            } else if (mode === "visual-block") {
+                displayText = "VISUAL BLOCK";
+            } else if (mode === "replace") {
+                displayText = "REPLACE";
+            }
+
+            modeDisplay.textContent = displayText;
 
             modeDisplay.className = "vim-mode-indicator";
-            if (mode === "insert") {
+            if (mode === "insert" || mode === "replace") {
                 modeDisplay.classList.add("insert-mode");
-            } else if (mode === "visual") {
+            } else if (mode && mode.startsWith("visual")) {
                 modeDisplay.classList.add("visual-mode");
             } else {
                 modeDisplay.classList.add("normal-mode");

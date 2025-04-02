@@ -28,20 +28,20 @@ func ExecuteGoCode(code string) (string, error) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), executionTimeout)
 	defer cancel()
-	
+
 	cmd := exec.CommandContext(ctx, "go", "run", tmpFile)
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
-	
+
 	err = cmd.Run()
-	
+
 	if err != nil {
 		if stderr.Len() > 0 {
 			return "", fmt.Errorf("%s", stderr.String())
 		}
-		return "", fmt.Errorf("execution error: %v", err)
+		return "", fmt.Errorf("execution timed out after %v seconds", executionTimeout.Seconds())
 	}
-	
+
 	return stdout.String(), nil
 }

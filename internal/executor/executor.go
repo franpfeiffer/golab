@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	executionTimeout = 5 * time.Second
+	executionTimeout = 120 * time.Second
 )
 
 func ExecuteGoCode(code string) (string, error) {

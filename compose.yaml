@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  golab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "42069:42069"
+    restart: unless-stopped
+    volumes:
+      - ./templates:/app/templates
+      - ./static:/app/static

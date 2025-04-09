@@ -1,0 +1,19 @@
+name = "golab"
+main = "src/index.js"
+compatibility_date = "2023-12-01"
+
+[vars]
+PORT = "8080"
+
+[[services]]
+binding = "GOLAB"
+service = "golab-container"
+
+[placement]
+mode = "smart"
+
+[containers]
+  [[containers.services]]
+  name = "golab-container"
+  image = "{your-docker-username}/golab:latest"
+  container_port = 8080

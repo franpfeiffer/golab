@@ -23,7 +23,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "42069"
+		port = "8080"
 	}
 
 	fmt.Printf("Server running at http://localhost:%s\n", port)
